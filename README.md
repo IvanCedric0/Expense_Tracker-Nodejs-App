@@ -76,6 +76,6 @@ Visit http://localhost:3000 in your browser.
 ###  Clone the Repository
 
 ```
-    git clone https://github.com/yourusername/expense-tracker.git
+    git clone https://github.com/IvanCedric0/Expense_tracker-Nodejs-App.git
     cd expense-tracker
 ```
