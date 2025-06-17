@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUnitialized: true,
+    saveUninitialized: true,
 }))
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -53,8 +53,12 @@ app.get("/register", (req, res)=>{
 });
 
 app.get("/expenses", (req, res)=>{
-    res.render("dashboard.ejs")
-})
+    if(req.isAuthenticated()){
+        res.render("dashboard.ejs");
+    }else{
+        res.redirect("/login");
+    } 
+});
 
 app.post("/register", async(req, res)=>{
     const newUser = req.body;
@@ -87,9 +91,9 @@ app.post("/login", passport.authenticate("local", {
     failureRedirect: "/login"
 }));
 
-passport.use("local", new Strategy(async function verify(email, password, cb) {
+passport.use("local", new Strategy(async function verify(username, password, cb) {
     try{
-        const checkUser = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+        const checkUser = await db.query("SELECT * FROM users WHERE email = $1", [username]);
         if(checkUser.rows.length>0){
            const user = checkUser.rows[0];
             bcrypt.compare(password, user.password, (err, valid)=>{
