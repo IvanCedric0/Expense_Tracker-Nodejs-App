@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+
+<div class="container m-0 ">
+    <h1>Login</h1>
+    <div class="row">
+        <div class="col-8">
+            <div class="card p-2 dark">
+                <form action="/login" method="POST"> 
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" name="email" aria-describedby="emailHelp" fdprocessedid="lvxfsc">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" fdprocessedid="blj7zl" autocomplete="off">
+                    </div>
+                    <button type="submit" class="btn btn-dark" fdprocessedid="iwg69h">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
