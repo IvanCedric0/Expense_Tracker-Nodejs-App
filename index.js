@@ -60,6 +60,16 @@ app.get("/expenses", (req, res)=>{
     } 
 });
 
+app.get("/logout", (req, res) =>{
+    req.logout(function(err) {
+        if(err){
+            return next(err);
+        }else{
+            res.redirect("/")
+        }
+    })
+});
+
 app.post("/register", async(req, res)=>{
     const newUser = req.body;
     try{
