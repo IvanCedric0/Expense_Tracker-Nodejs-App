@@ -1,5 +1,47 @@
 <%- include('partials/header') %>
-<h1>dashboard</h1>
-<a href="/logout">Logout</a>
+<div class="header" style="display: flex; align-items: center; justify-content: space-between; margin: 0 2rem;">
+<h3>Dashboard</h3>
+<a href="/logout" class=" btn btn-block w-25"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+</svg> Logout</a>
+</div>
+
+<div class="main centered m-5 mt-10">
+    <div class="card">
+        <div class="card-body">
+            <form action="/new" method="POST" class="">
+                <div class="col-md-6 mx-auto">
+                    <div class="input-group" >
+                        <button type="submit" class="input-group-text" id="basic-addon1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"></path>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
+                            </svg>
+                        </button>
+                        <input type="text" name="expense" class="form-control" placeholder="Add Expense" aria-label="Input group example" aria-describedby="basic-addon1" fdprocessedid="ec7pw">
+                        <input type="text" name="amount" class="form-control ml-1" placeholder="Add Amount" aria-label="Input group example" aria-describedby="basic-addon1" fdprocessedid="ec7pw">
+                    </div>
+                </div>
+            </form>
+            <div class="main card centered mt-5 p-5 border-0" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="descrption" style="display: flex; gap: 3rem; justify-content: space-between;">
+                    <h4>Expense</h2>
+                    <h4>Amount</h2>
+                    <h4>Date</h2>
+                </div>
+                <hr style="margin: 0;">
+                <% expenses.forEach(expanse =>{ %>
+                    <div class="expenses" style="display: flex; gap: 3rem; justify-content: space-between; position: relative;">
+                        <h4><%= expanse.title %></h2>
+                        <span style="position: absolute; left: 50%; transform: translateX(-50%);"><h4 style="text-align: center; min-width: 100px;"><%= expanse.amount %></h2></span>
+                        <h4><%= expanse.formattedDate %></h2>
+                    </div>
+                <% }) %>
+                
+            </div>
+        </div>
+    </div>
+</div>
 
 <%- include('partials/footer') %>

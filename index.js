@@ -7,7 +7,7 @@ import pg from "pg";
 import session from "express-session";
 import bodyParser from "body-parser";
 import bcrypt, { hash } from "bcrypt";
-
+import {format} from "date-fns";
 
 const app = express(); 
 const port = 3000;
@@ -20,6 +20,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        maxAge: 1000 *60 *60,
+    },
 }))
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -39,7 +42,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.get("/", (req, res)=>{
+
+app.get("/", async(req, res)=>{
     res.render("index.ejs")
 })
 
@@ -52,9 +56,20 @@ app.get("/register", (req, res)=>{
     res.render("register");
 });
 
-app.get("/expenses", (req, res)=>{
+
+app.get("/expenses", async(req, res)=>{
     if(req.isAuthenticated()){
-        res.render("dashboard.ejs");
+        try{
+            const result = await db.query("SELECT * FROM expense WHERE user_id = $1", [req.user.id]);
+            const expenses = result.rows.map(exp => ({
+                ...exp,
+                formattedDate: format(new Date(exp.date), "dd/MM/yyyy")
+            }));
+            console.log(expenses)
+            res.render("dashboard.ejs", {expenses: expenses});
+        }catch(err){
+            console.log(err)
+        }
     }else{
         res.redirect("/login");
     } 
@@ -131,6 +146,25 @@ passport.use("local", new Strategy(async function verify(username, password, cb)
         return cb(err);
     }
 }));
+
+app.post("/new", async (req, res) =>{
+
+    if(!req.isAuthenticated()){
+        res.redirect("/login")
+    }else{
+       const userExpanseInfo = req.body;
+    console.log(userExpanseInfo);
+    console.log(req.user);
+    try{
+        await db.query("INSERT INTO expense(user_id, title, amount, date) VALUES($1, $2, $3, NOW())", [req.user.id, userExpanseInfo.expense, userExpanseInfo.amount]);
+        console.log("Success Inserting Expense");
+        res.redirect("/expenses")
+    }  catch(err){
+        console.log(err)
+    }
+    }
+    
+}); 
 
 passport.use("google", new GoogleStrategy(
     {
