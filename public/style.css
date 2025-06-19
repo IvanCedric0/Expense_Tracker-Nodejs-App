@@ -6,3 +6,31 @@ body{
 .main{
     margin-top: 200px;
 }
+
+.social-block{
+    border: none;
+    box-shadow: 1px 1px 3px black;
+    transition: 0.4s ease-in-out;
+}
+
+.social-block:hover{
+    transform: scale(1.01);
+    box-shadow: -1px 1px 5px black;
+}
+
+.btn{
+    transition: 0.4s ease-in-out;
+}
+
+.btn:hover{
+    box-shadow: -1px 1px 5px black;
+}
+
+.add-btn{
+    transition: 0.4s ease-in-out;
+}
+
+.add-btn:hover{
+    transform: scale(1.07);
+    cursor: pointer;
+}
