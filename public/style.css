@@ -34,3 +34,13 @@ body{
     transform: scale(1.07);
     cursor: pointer;
 }
+
+.img-fluid{
+    border-radius: 10px;
+    transition: 0.5s ease-in-out;
+}
+
+.img-fluid:hover{
+    transform: scale(1.01);
+}
+
